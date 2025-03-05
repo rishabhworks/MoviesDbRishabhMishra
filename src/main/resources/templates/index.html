@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies Database</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="banner">
+    <img src="/moviebanner.jpg" alt="Movies Banner" class="banner-img">
+</div>
+<div class="container">
+    <h1>Movies Database</h1>
+    <a href="/add" class="button">Add New Movie</a>
+    <form action="/search" method="get" class="search-form">
+        <input type="text" name="name" placeholder="Search movies..." required>
+        <button type="submit">Search</button>
+    </form>
+    <div class="movies-grid">
+        <div class="movie-card" th:each="movie : ${movies}">
+            <h3 th:text="${movie.name}"></h3>
+            <p>Genre: <span th:text="${movie.genre}"></span></p>
+            <p>Language: <span th:text="${movie.language}"></span></p>
+            <p>Duration: <span th:text="${movie.duration} + ' min'"></span></p>
+            <p>Price: <span th:text="'$' + ${movie.price}"></span></p>
+            <div class="actions">
+                <a th:href="@{/edit/{id}(id=${movie.id})}" class="button">Edit</a>
+                <a th:href="@{/delete/{id}(id=${movie.id})}" class="button delete">Delete</a>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(movies)}" class="movie-card">
+            <p style="text-align: center; font-size: 1.2em;">No movies found.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
