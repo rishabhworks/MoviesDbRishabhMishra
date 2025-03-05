@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.id != null} ? 'Edit Movie' : 'Add Movie'"></title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="banner">
+    <img src="/moviebanner.jpg" alt="Movies Banner" class="banner-img">
+</div>
+<div class="container">
+    <h1 th:text="${movie.id != null} ? 'Edit Movie' : 'Add Movie'"></h1>
+    <form th:action="@{/save}" th:object="${movie}" method="post" style="max-width: 500px; margin: 0 auto;">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label>Movie Name</label>
+            <input type="text" th:field="*{name}" required placeholder="Enter movie name">
+            <span th:errors="*{name}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Genre</label>
+            <select th:field="*{genre}">
+                <option value="Comedy">Comedy</option>
+                <option value="Drama" selected>Drama</option>
+                <option value="Action">Action</option>
+            </select>
+            <span th:errors="*{genre}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Language</label>
+            <div>
+                <input type="radio" th:field="*{language}" value="English" id="english" checked>
+                <label for="english">English</label>
+                <input type="radio" th:field="*{language}" value="French" id="french">
+                <label for="french">French</label>
+                <input type="radio" th:field="*{language}" value="Other" id="other">
+                <label for="other">Other</label>
+            </div>
+            <span th:errors="*{language}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Duration (min)</label>
+            <input type="number" th:field="*{duration}" min="10" max="300" required placeholder="10-300">
+            <span th:errors="*{duration}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" th:field="*{price}" step="0.01" min="0.01" required placeholder="e.g., 9.99">
+            <span th:errors="*{price}" class="error"></span>
+        </div>
+        <div style="text-align: center;">
+            <button type="submit" class="button">Save</button>
+            <a href="/" class="button" style="background: linear-gradient(45deg, #6c757d, #495057);">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
